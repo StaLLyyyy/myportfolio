@@ -413,7 +413,7 @@
             { src: 'Snow Strippers - Just Your Doll.mp3', title: 'Just Your Doll', artist: 'Snow Strippers' },
             { src: 'TV Girl - Not Allowed.mp3', title: 'Not Allowed', artist: 'TV Girl' },
             { src: 'Ratter - Blue Hair.mp3', title: 'Blue Hair', artist: 'Ratter' },
-            { src: 'Tidiet - cities aviv not that.mp3', title: 'cities aviv', artist: 'Tidiet' },
+            { src: 'Tidiet - cities aviv not that.mp3', title: 'cities aviv (Slowed)', artist: 'Tidiet' },
             { src: 'evo9 - тупой клубняк для твоей пизды.mp3', title: 'тупой клубняк', artist: 'evo9' },
             { src: 'evo9 - меня рвёт.mp3', title: 'меня рвёт', artist: 'evo9' }
         ];
@@ -428,6 +428,7 @@
         // --- Three.js Background Setup ---
         let scene, camera, renderer, particles, clock;
         const bgCanvas = document.getElementById('bg-canvas');
+        let targetCameraPos = { x: 0, y: 0 };
         
         function initThreeJS() {
             clock = new THREE.Clock();
@@ -478,8 +479,9 @@
                         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
                         
                         // Music reactivity
-                        float reactivity = pow(aRandom, 2.0) * uBass * 15.0;
-                        modelPosition.y += sin(uTime * aRandom * 0.5 + position.x * 0.1) * 0.5 + reactivity;
+                        float reactivity = pow(aRandom, 2.0) * uBass * 25.0;
+                        modelPosition.z += reactivity;
+                        modelPosition.y += sin(uTime * aRandom * 0.5 + position.x * 0.1) * 0.5;
                         modelPosition.x += cos(uTime * aRandom * 0.5 + position.y * 0.1) * 0.5;
 
                         vec4 viewPosition = viewMatrix * modelPosition;
@@ -490,9 +492,9 @@
                 fragmentShader: `
                     varying vec3 vColor;
                     void main() {
-                        float strength = distance(gl_PointCoord, vec2(0.5));
-                        strength = 1.0 - step(0.5, strength);
-                        gl_FragColor = vec4(vColor, strength * 0.8);
+                        float dist = distance(gl_PointCoord, vec2(0.5));
+                        float strength = pow(1.0 - dist, 3.0);
+                        gl_FragColor = vec4(vColor, strength * 1.5);
                     }
                 `,
                 uniforms: {
@@ -524,10 +526,10 @@
             if(particles) particles.material.uniforms.uTime.value = elapsedTime;
 
             requestAnimationFrame(animate);
-
+            let bass = 0;
             if (analyser && dataArray) {
                 analyser.getByteFrequencyData(dataArray);
-                const bass = (dataArray[1] + dataArray[2] + dataArray[3]) / 3 / 255;
+                bass = (dataArray[1] + dataArray[2] + dataArray[3]) / 3 / 255;
                 if(particles) particles.material.uniforms.uBass.value = bass;
                 audioPlayerContainer.style.setProperty('--bass-glow', `${bass * 25}px`);
             }
@@ -535,6 +537,22 @@
             if(particles) {
                 particles.rotation.y += 0.0002;
                 particles.rotation.z += 0.0001;
+            }
+
+            if(camera) {
+                const shakeIntensity = bass * 1.5;
+                const zoomIntensity = bass * 10.0;
+                
+                const targetX = targetCameraPos.x * 2 + (Math.random() - 0.5) * shakeIntensity;
+                const targetY = -targetCameraPos.y * 2 + (Math.random() - 0.5) * shakeIntensity;
+                const targetZ = 50 - zoomIntensity;
+
+                // Smooth interpolation
+                camera.position.x += (targetX - camera.position.x) * 0.05;
+                camera.position.y += (targetY - camera.position.y) * 0.05;
+                camera.position.z += (targetZ - camera.position.z) * 0.05;
+
+                camera.lookAt(scene.position);
             }
 
             if(renderer) renderer.render(scene, camera);
@@ -576,11 +594,8 @@
                 const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
                 const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
                 parallaxContainer.style.transform = `rotateX(${-y * 2}deg) rotateY(${x * 2}deg) translateZ(0)`;
-                if(camera) {
-                    camera.position.x = x * 2;
-                    camera.position.y = -y * 2;
-                    camera.lookAt(scene.position);
-                }
+                targetCameraPos.x = x;
+                targetCameraPos.y = y;
             });
         }
         
