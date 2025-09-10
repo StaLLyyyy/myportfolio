@@ -282,6 +282,7 @@
             font-size: 0.8rem;
             line-height: 1.2;
             min-width: 150px;
+            flex-shrink: 0; /* Prevent track info from shrinking */
         }
         .track-info span {
             display: block;
@@ -310,6 +311,7 @@
             justify-content: center;
             align-items: center;
             transition: background 0.3s;
+            flex-shrink: 0; /* Prevent button from shrinking */
         }
         #audio-control:hover {
             background: rgba(40, 40, 40, 0.8);
@@ -351,8 +353,13 @@
                 font-size: 1.8rem;
             }
             #audio-player-container {
-                grid-template-columns: 1fr auto; /* Visualizer and control button */
+                display: flex;
+                justify-content: space-between;
                 gap: 10px;
+            }
+            #audio-visualizer-canvas {
+                width: 100px; /* Give it a fixed width on mobile */
+                flex-grow: 0;
             }
             .track-info {
                 display: none; /* Hide track info completely on smallest screens */
@@ -406,7 +413,7 @@
             <div class="links">
                 <span class="note-item" onclick="window.open('https://www.youtube.com/@stallyyyy', '_blank')">youtube</span>
                 <span style="margin: 0 10px; color: #666;">//</span>
-                <span class="note-item" onclick="copyToClipboard('https://t.me/your-telegram', this)">telegram</span>
+                <span class="note-item" onclick="window.open('https://t.me/StaLLyyyyyPortfolio', '_blank')">telegram</span>
             </div>
             <div class="footer">
                 2025... © System Initialized
@@ -451,26 +458,51 @@
         }
         typeWriter();
 
-        // --- NEW RANDOM MUSIC PLAYER (FIXED) ---
+        // --- NEW RANDOM MUSIC PLAYER (UPDATED) ---
 
         // HOW TO USE:
-        // 1. Upload your music files to your Netlify site.
+        // 1. Place your music files (e.g., track1.mp3) in the same folder as this index.html file.
         // 2. Add the file names and info to the playlist below.
         const playlist = [
             {
-                src: 'https://assets.mixkit.co/music/preview/mixkit-hollowness-71.mp3',
-                title: 'Hollowness',
-                artist: 'Mixkit'
+                src: 'Night Club - Your Addiction.mp3',
+                title: 'Your Addiction',
+                artist: 'Night Club'
             },
             {
-                src: 'https://assets.mixkit.co/music/preview/mixkit-spirit-of-a-new-world-133.mp3',
-                title: 'Spirit of a New World',
-                artist: 'Mixkit'
+                src: 'Sqx Me - I Like It.mp3',
+                title: 'I Like It',
+                artist: 'Sqx Me'
             },
             {
-                src: 'https://assets.mixkit.co/music/preview/mixkit-pop-05-695.mp3',
-                title: 'Pop 05',
-                artist: 'Mixkit'
+                src: 'Snow Strippers - Just Your Doll.mp3',
+                title: 'Just Your Doll',
+                artist: 'Snow Strippers'
+            },
+            {
+                src: 'TV Girl - Not Allowed.mp3',
+                title: 'Not Allowed',
+                artist: 'TV Girl'
+            },
+            {
+                src: 'Ratter - Blue Hair.mp3',
+                title: 'Blue Hair',
+                artist: 'Ratter'
+            },
+            {
+                src: 'Tidiet - cities aviv not that i\'m anywhere - Slowed + Reverd.mp3',
+                title: 'cities aviv not that i\'m anywhere (Slowed)',
+                artist: 'Tidiet'
+            },
+            {
+                src: 'evo9 - тупой клубняк для твоей пизды.mp3',
+                title: 'тупой клубняк для твоей пизды',
+                artist: 'evo9'
+            },
+            {
+                src: 'evo9 - меня рвёт.mp3',
+                title: 'меня рвёт',
+                artist: 'evo9'
             }
         ];
         let currentSongIndex = -1;
