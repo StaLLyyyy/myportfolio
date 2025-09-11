@@ -180,7 +180,9 @@
         }
 
         .hidden { display: none; }
-        .links, .footer { margin-top: 4rem; text-align: center; color: #666; font-size: 0.9rem; }
+        .links { margin-top: 4rem; text-align: center; }
+        .footer { margin-top: 4rem; text-align: center; color: #666; font-size: 0.9rem; display: flex; justify-content: center; align-items: center; gap: 1rem;}
+        #visitor-counter { color: #888; text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
         .socials { display: flex; justify-content: center; gap: 25px; }
         .social-link { color: #666; transition: color 0.3s, text-shadow 0.3s, transform 0.3s; }
         .social-link:hover { color: #fff; text-shadow: 0 0 8px var(--glow-color); transform: scale(1.1); }
@@ -304,9 +306,9 @@
     <div id="parallax-container">
         <main id="content" class="container hidden">
              <header>
-                <h1 class="header-title"><span>[//] ViewModel</span></h1>
-                <p class="subtitle">A collection of viewmodel animations for Roblox</p>
-            </header>
+                 <h1 class="header-title"><span>[//] ViewModel</span></h1>
+                 <p class="subtitle">A collection of viewmodel animations for Roblox</p>
+             </header>
 
             <section id="about-me" class="content-section">
                 <h2 class="section-title">> About Me</h2>
@@ -353,16 +355,16 @@
 
             <div class="links">
                  <div class="socials">
-                     <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
-                         <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
-                     </a>
-                     <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
-                         <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
-                     </a>
+                       <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
+                           <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
+                       </a>
+                       <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
+                           <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
+                       </a>
                  </div>
             </div>
             <div class="footer">
-                2025... © System Initialized
+                 <span id="visitor-counter">Visitors: ...</span> | 2025... © System Initialized
             </div>
         </main>
     </div>
@@ -392,7 +394,67 @@
     </div>
     <audio id="bg-music" crossorigin="anonymous"></audio>
 
-    <script>
+    <script type="module">
+        // =====================================================================================
+        // IMPORTANT: FIX FOR "Missing or insufficient permissions" ERROR
+        // =====================================================================================
+        // This error is NOT in this HTML file. It's a security setting in your Firebase project.
+        // To fix it, you MUST update your Firestore Security Rules.
+        //
+        // HOW TO FIX:
+        // 1. Go to your project in the Firebase Console (console.firebase.google.com).
+        // 2. In the left menu, go to: Build -> Firestore Database.
+        // 3. Click the "Rules" tab at the top.
+        // 4. Replace EVERYTHING in the rules editor with the code below:
+        /*
+        rules_version = '2';
+        service cloud.firestore {
+          match /databases/{database}/documents {
+            // This rule allows anyone to read and write to the visitor counter.
+            match /artifacts/{appId}/public/data/analytics/visits {
+              allow read, write: if true;
+            }
+          }
+        }
+        */
+        // 5. Click "Publish". The error will be fixed immediately.
+        // =====================================================================================
+
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-portfolio';
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+        } catch (e) {
+            console.error("Firebase initialization failed:", e);
+        }
+
+        const visitorCounterElement = document.getElementById('visitor-counter');
+        async function updateVisitorCount() {
+            if (!db) {
+                visitorCounterElement.textContent = `Visitors: N/A`;
+                return;
+            }
+            try {
+                const counterRef = doc(db, `artifacts/${appId}/public/data/analytics`, 'visits');
+                await setDoc(counterRef, { count: increment(1) }, { merge: true });
+                const docSnap = await getDoc(counterRef);
+                if (docSnap.exists()) {
+                    visitorCounterElement.textContent = `Visitors: ${docSnap.data().count}`;
+                } else {
+                    visitorCounterElement.textContent = `Visitors: 1`;
+                }
+            } catch (error) {
+                console.error("Error updating visitor count:", error);
+                visitorCounterElement.textContent = `Visitors: Error`;
+            }
+        }
+
         const enterTextElement = document.getElementById('enter');
         const textToType = "system initialization...";
         const textSpan = document.getElementById('typewriter');
@@ -407,6 +469,8 @@
         }
         typeWriter();
 
+        // NOTE: For these local audio files to work, you must place the MP3 files
+        // in the same folder as this index.html file on your web server.
         const playlist = [
             { src: 'Night Club - Your Addiction.mp3', title: 'Your Addiction', artist: 'Night Club' },
             { src: 'Sqz Me - I Like It.mp3', title: 'I Like It', artist: 'Sqz Me' },
@@ -478,23 +542,25 @@
                         vColor = color;
                         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
                         
-                        // Music reactivity
-                        float reactivity = pow(aRandom, 2.0) * uBass * 25.0;
+                        float reactivity = pow(aRandom, 2.0) * uBass * 35.0;
                         modelPosition.z += reactivity;
                         modelPosition.y += sin(uTime * aRandom * 0.5 + position.x * 0.1) * 0.5;
                         modelPosition.x += cos(uTime * aRandom * 0.5 + position.y * 0.1) * 0.5;
 
                         vec4 viewPosition = viewMatrix * modelPosition;
                         gl_Position = projectionMatrix * viewPosition;
-                        gl_PointSize = aSize * (100.0 / -viewPosition.z) * (1.0 + uBass * aRandom);
+                        gl_PointSize = aSize * (100.0 / -viewPosition.z) * (1.0 + uBass * aRandom * 1.5);
                     }
                 `,
                 fragmentShader: `
                     varying vec3 vColor;
+                    uniform float uBass;
                     void main() {
                         float dist = distance(gl_PointCoord, vec2(0.5));
                         float strength = pow(1.0 - dist, 3.0);
-                        gl_FragColor = vec4(vColor, strength * 1.5);
+                        vec3 finalColor = vColor + (vColor * uBass * 3.0);
+                        float finalAlpha = strength * (1.5 + uBass * 2.5);
+                        gl_FragColor = vec4(finalColor, finalAlpha);
                     }
                 `,
                 uniforms: {
@@ -529,9 +595,13 @@
             let bass = 0;
             if (analyser && dataArray) {
                 analyser.getByteFrequencyData(dataArray);
-                bass = (dataArray[1] + dataArray[2] + dataArray[3]) / 3 / 255;
+                const bassFrequencies = dataArray.slice(1, 5);
+                bass = bassFrequencies.reduce((a, b) => a + b) / bassFrequencies.length / 255;
+                bass = Math.pow(bass, 1.5); // make bass response more punchy
+                if (bass > 1.0) bass = 1.0;
+                
                 if(particles) particles.material.uniforms.uBass.value = bass;
-                audioPlayerContainer.style.setProperty('--bass-glow', `${bass * 25}px`);
+                audioPlayerContainer.style.setProperty('--bass-glow', `${bass * 30}px`);
             }
             
             if(particles) {
@@ -540,17 +610,26 @@
             }
 
             if(camera) {
-                const shakeIntensity = bass * 1.5;
-                const zoomIntensity = bass * 10.0;
-                
-                const targetX = targetCameraPos.x * 2 + (Math.random() - 0.5) * shakeIntensity;
-                const targetY = -targetCameraPos.y * 2 + (Math.random() - 0.5) * shakeIntensity;
-                const targetZ = 50 - zoomIntensity;
+                const shakeAmplitude = bass * 0.8; 
+                const rollAmplitude = bass * 0.04; 
+                const zoomIntensity = bass * 20.0;
+                const fovIntensity = bass * 10;
 
-                // Smooth interpolation
-                camera.position.x += (targetX - camera.position.x) * 0.05;
-                camera.position.y += (targetY - camera.position.y) * 0.05;
-                camera.position.z += (targetZ - camera.position.z) * 0.05;
+                const shakeX = Math.sin(elapsedTime * 30) * Math.cos(elapsedTime * 15) * shakeAmplitude;
+                const shakeY = Math.cos(elapsedTime * 25) * Math.sin(elapsedTime * 18) * shakeAmplitude;
+                const shakeZRoll = Math.sin(elapsedTime * 20) * rollAmplitude;
+
+                const targetX = targetCameraPos.x * 2 + shakeX;
+                const targetY = -targetCameraPos.y * 2 + shakeY;
+                const targetZ = 50 - zoomIntensity;
+                const targetFov = 75 - fovIntensity;
+
+                camera.position.x += (targetX - camera.position.x) * 0.12;
+                camera.position.y += (targetY - camera.position.y) * 0.12;
+                camera.position.z += (targetZ - camera.position.z) * 0.12;
+                camera.rotation.z += (shakeZRoll - camera.rotation.z) * 0.1;
+                camera.fov += (targetFov - camera.fov) * 0.1;
+                camera.updateProjectionMatrix();
 
                 camera.lookAt(scene.position);
             }
@@ -562,7 +641,34 @@
 
         function setAndLoadRandomSong() { let newSongIndex; do { newSongIndex = Math.floor(Math.random() * playlist.length); } while (playlist.length > 1 && newSongIndex === currentSongIndex); currentSongIndex = newSongIndex; const song = playlist[currentSongIndex]; bgMusic.src = song.src; trackTitleElement.textContent = `${song.title} - ${song.artist}`; bgMusic.load(); }
         bgMusic.addEventListener('ended', () => { setAndLoadRandomSong(); bgMusic.play(); });
-        enterTextElement.addEventListener('click', function() { if (!audioContext) { audioContext = new (window.AudioContext || window.webkitAudioContext)(); setAndLoadRandomSong(); sourceNode = audioContext.createMediaElementSource(bgMusic); analyser = audioContext.createAnalyser(); sourceNode.connect(analyser); analyser.connect(audioContext.destination); analyser.fftSize = 128; dataArray = new Uint8Array(analyser.frequencyBinCount); runVisualizer(); } audioContext.resume(); const playPromise = bgMusic.play(); if (playPromise !== undefined) { playPromise.catch(e => console.error("Audio play failed:", e)); } this.style.opacity = '0'; document.body.classList.add('site-entered'); setTimeout(() => { this.style.display = 'none'; const content = document.getElementById('content'); content.classList.remove('hidden'); requestAnimationFrame(() => content.classList.add('visible')); }, 500); });
+        
+        enterTextElement.addEventListener('click', function() { 
+            if (!audioContext) { 
+                updateVisitorCount(); 
+                audioContext = new (window.AudioContext || window.webkitAudioContext)(); 
+                setAndLoadRandomSong(); 
+                sourceNode = audioContext.createMediaElementSource(bgMusic); 
+                analyser = audioContext.createAnalyser(); 
+                sourceNode.connect(analyser); 
+                analyser.connect(audioContext.destination); 
+                analyser.fftSize = 128; 
+                dataArray = new Uint8Array(analyser.frequencyBinCount); 
+                runVisualizer(); 
+            } 
+            audioContext.resume(); 
+            const playPromise = bgMusic.play(); 
+            if (playPromise !== undefined) { 
+                playPromise.catch(e => { /* Audio play is handled by user interaction */ }); 
+            } 
+            this.style.opacity = '0'; 
+            document.body.classList.add('site-entered'); 
+            setTimeout(() => { 
+                this.style.display = 'none'; 
+                const content = document.getElementById('content'); 
+                content.classList.remove('hidden'); 
+                requestAnimationFrame(() => content.classList.add('visible')); 
+            }, 500); 
+        });
         
         const visualizerCanvas = document.getElementById('audio-visualizer-canvas');
         const ctx = visualizerCanvas.getContext('2d');
@@ -645,5 +751,3 @@
     </script>
 </body>
 </html>
-
-
