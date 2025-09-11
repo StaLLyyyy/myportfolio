@@ -46,7 +46,7 @@
             height: 100%;
             overflow-y: auto;
             overflow-x: hidden;
-            perspective: 1500px; /* Adjusted for a balanced 3D effect */
+            perspective: 1500px;
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -95,7 +95,7 @@
             color: #fff;
             letter-spacing: 2px;
             position: relative;
-            display: inline-flex; /* Use flex for letter animation */
+            display: inline-flex;
         }
         .header-title > span > span {
             display: inline-block;
@@ -131,12 +131,12 @@
         .content-section {
             margin-bottom: 5rem;
             opacity: 0;
-            transform: translateY(30px) translateZ(40px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: perspective(600px) rotateX(-10deg) translateY(30px) translateZ(40px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .content-section.in-view {
             opacity: 1;
-            transform: translateY(0) translateZ(40px);
+            transform: perspective(600px) rotateX(0deg) translateY(0) translateZ(40px);
         }
         .section-title {
             text-align: center;
@@ -153,17 +153,34 @@
         }
         #about-me p { margin-bottom: 2rem; }
         
-        /* --- Glow Glassmorphism --- */
         .glass-effect {
-            background: rgba(15, 20, 35, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 20, 35, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 0px 0px var(--glow-color) inset;
-            transition: box-shadow 0.3s ease-out;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 0px 0px var(--glow-color) inset;
+            transition: box-shadow 0.4s ease-out, background 0.4s ease;
+            position: relative;
         }
+
+        .glass-effect::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 0px 0px var(--glow-color);
+            transition: box-shadow 0.4s ease-out;
+            pointer-events: none;
+            opacity: 0;
+        }
+
         .glass-effect:hover {
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 10px 2px var(--glow-color) inset;
+            background: rgba(20, 25, 45, 0.5);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6), 0 0 0px 0px var(--glow-color) inset;
+        }
+        .glass-effect:hover::before {
+             box-shadow: 0 0 25px 5px var(--glow-color);
+             opacity: 1;
         }
         
         .skills-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
@@ -182,10 +199,10 @@
         .project-card {
             border-radius: 15px; transform-style: preserve-3d;
             cursor: none; overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .project-card:hover {
-            transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) scale3d(1.05, 1.05, 1.05) translateZ(20px);
+            transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) scale3d(1.05, 1.05, 1.05) translateZ(30px);
         }
         
         .card-content { 
@@ -415,7 +432,7 @@
         let audioContext, analyser, sourceNode, dataArray;
         let userVolume = 0.7;
 
-        let scene, camera, renderer, clock, lines, particles;
+        let scene, camera, renderer, clock, particles;
         const bgCanvas = document.getElementById('bg-canvas');
         let targetCameraPos = { x: 0, y: 0 };
         
@@ -429,95 +446,73 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const particleCount = 3000;
+            const particleCount = 15000;
             const positions = new Float32Array(particleCount * 3);
-            const randoms = new Float32Array(particleCount);
+            const randoms = new Float32Array(particleCount * 2); 
             
             for (let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 200;
-                positions[i3 + 1] = (Math.random() - 0.5) * 200;
-                positions[i3 + 2] = (Math.random() - 0.5) * 200;
-                randoms[i] = Math.random();
+                const i2 = i * 2;
+                positions[i3] = (Math.random() - 0.5) * 250;
+                positions[i3 + 1] = (Math.random() - 0.5) * 250;
+                positions[i3 + 2] = (Math.random() - 0.5) * 250;
+                
+                randoms[i2] = Math.random() * 10 + 5; // Speed
+                randoms[i2 + 1] = Math.random(); // Initial offset
             }
 
             const particleGeometry = new THREE.BufferGeometry();
             particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particleGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+            particleGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 2));
             
             const particleMaterial = new THREE.ShaderMaterial({
                 vertexShader: `
-                    attribute float aRandom;
+                    attribute vec2 aRandom;
                     uniform float uTime;
                     uniform float uBass;
+                    varying float vY;
+
                     void main() {
-                        vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-                        modelPosition.y += sin(uTime * aRandom * 0.5) * 5.0;
+                        float speed = aRandom.x;
+                        float offset = aRandom.y;
+
+                        vec3 pos = position;
+                        float loopTime = 250.0 / speed;
+                        pos.y = -125.0 + mod(offset * 250.0 - uTime * speed * (1.0 + uBass * 5.0), 250.0);
+
+                        vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
+                        
                         vec4 viewPosition = viewMatrix * modelPosition;
+                        vY = pos.y;
                         gl_Position = projectionMatrix * viewPosition;
-                        gl_PointSize = (aRandom * 2.0 + 1.0) * (150.0 / -viewPosition.z) * (1.0 + uBass * aRandom);
+                        gl_PointSize = (aRandom.y * 1.5 + 0.5) * (180.0 / -viewPosition.z);
                     }
                 `,
                 fragmentShader: `
                     uniform float uBass;
+                    varying float vY;
                     void main() {
-                        float dist = distance(gl_PointCoord, vec2(0.5));
-                        float strength = pow(1.0 - dist, 2.0);
-                        vec3 color = vec3(0.6, 0.7, 1.0);
-                        gl_FragColor = vec4(color, strength * (0.5 + uBass * 1.5));
+                        float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
+                        float strength = pow(1.0 - dist, 3.0);
+                        
+                        // Fade in at the top, brightest at the bottom
+                        float falloff = smoothstep(-125.0, -110.0, vY);
+                        float highlight = smoothstep(-120.0, -125.0, vY);
+
+                        vec3 color = mix(vec3(0.3, 0.5, 1.0), vec3(1.0, 1.0, 1.0), highlight + uBass);
+
+                        gl_FragColor = vec4(color, strength * falloff);
                     }
                 `,
-                 uniforms: { uTime: { value: 0 }, uBass: { value: 0 } },
+                 uniforms: { 
+                    uTime: { value: 0 }, 
+                    uBass: { value: 0 },
+                },
                 transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
             });
 
             particles = new THREE.Points(particleGeometry, particleMaterial);
             scene.add(particles);
-
-            const lineVertices = [];
-            const p = new THREE.Vector3();
-            for (let i = 0; i < particleCount; i++) {
-                p.fromBufferAttribute(particleGeometry.attributes.position, i);
-                const closest = [];
-                for (let j = 0; j < particleCount; j++) {
-                    if (i === j) continue;
-                    const p2 = new THREE.Vector3().fromBufferAttribute(particleGeometry.attributes.position, j);
-                    const dist = p.distanceTo(p2);
-                    if (dist < 20) {
-                         closest.push({dist, index: j});
-                    }
-                }
-                closest.sort((a,b) => a.dist - b.dist);
-                for(let k = 0; k < Math.min(2, closest.length); k++) {
-                    lineVertices.push(p.x, p.y, p.z);
-                    const p2 = new THREE.Vector3().fromBufferAttribute(particleGeometry.attributes.position, closest[k].index);
-                    lineVertices.push(p2.x, p2.y, p2.z);
-                }
-            }
-
-            const lineGeometry = new THREE.BufferGeometry();
-            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lineVertices, 3));
-            const lineMaterial = new THREE.ShaderMaterial({
-                vertexShader: `
-                    uniform float uBass;
-                    void main() {
-                        vec4 pos = vec4(position, 1.0);
-                        pos.z *= 1.0 + uBass * 0.2;
-                        gl_Position = projectionMatrix * modelViewMatrix * pos;
-                    }
-                `,
-                fragmentShader: `
-                    uniform float uBass;
-                    void main() {
-                        gl_FragColor = vec4(0.5, 0.6, 1.0, 0.1 + uBass * 0.5);
-                    }
-                `,
-                uniforms: { uBass: { value: 0 } },
-                transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
-            });
-
-            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            scene.add(lines);
 
             window.addEventListener('resize', onWindowResize, false);
             animate();
@@ -545,29 +540,25 @@
                 
                 const smoothedBass = THREE.MathUtils.lerp(particles.material.uniforms.uBass.value, bass, 0.1);
                 particles.material.uniforms.uBass.value = smoothedBass;
-                lines.material.uniforms.uBass.value = smoothedBass;
 
                 audioPlayerContainer.style.setProperty('--bass-glow', `${smoothedBass * 30}px`);
                 document.documentElement.style.setProperty('--glow-spread', `${10 + smoothedBass * 15}px`);
             }
             
             if(particles) {
-                particles.rotation.y = elapsedTime * 0.03;
-                particles.rotation.x = elapsedTime * 0.02;
-                lines.rotation.copy(particles.rotation);
+                particles.rotation.y = elapsedTime * 0.02;
             }
 
             if(camera) {
-                const shakeAmplitude = bass * 0.5; 
                 const zoomIntensity = bass * 20.0;
                 
-                const targetX = targetCameraPos.x * 5 + (Math.random() - 0.5) * shakeAmplitude;
-                const targetY = -targetCameraPos.y * 5 + (Math.random() - 0.5) * shakeAmplitude;
+                const targetX = targetCameraPos.x * 8;
+                const targetY = -targetCameraPos.y * 8;
                 const targetZ = 100 - zoomIntensity;
 
-                camera.position.x += (targetX - camera.position.x) * 0.08;
-                camera.position.y += (targetY - camera.position.y) * 0.08;
-                camera.position.z += (targetZ - camera.position.z) * 0.08;
+                camera.position.x += (targetX - camera.position.x) * 0.04;
+                camera.position.y += (targetY - camera.position.y) * 0.04;
+                camera.position.z += (targetZ - camera.position.z) * 0.04;
                 
                 camera.lookAt(scene.position);
             }
