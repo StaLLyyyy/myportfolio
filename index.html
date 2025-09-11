@@ -13,11 +13,11 @@
             box-sizing: border-box;
         }
         :root {
-            --glow-color: rgba(173, 216, 230, 0.9); /* Light Blue Glow */
+            --glow-color: rgba(255, 255, 255, 0.8); /* Pure White Glow */
             --glow-spread: 10px;
         }
         body {
-            background: #010409;
+            background: #000000;
             color: #e0e0e0;
             font-family: 'JetBrains Mono', monospace;
             line-height: 1.6;
@@ -37,7 +37,7 @@
         }
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at center, rgba(1, 4, 9, 0.3) 0%, rgba(1, 4, 9, 0.95) 100%);
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.95) 100%);
             z-index: -1;
         }
 
@@ -154,11 +154,11 @@
         #about-me p { margin-bottom: 2rem; }
         
         .glass-effect {
-            background: rgba(15, 20, 35, 0.4);
+            background: rgba(40, 40, 40, 0.25);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 0px 0px var(--glow-color) inset;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             transition: box-shadow 0.4s ease-out, background 0.4s ease;
             position: relative;
         }
@@ -175,8 +175,8 @@
         }
 
         .glass-effect:hover {
-            background: rgba(20, 25, 45, 0.5);
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6), 0 0 0px 0px var(--glow-color) inset;
+            background: rgba(50, 50, 50, 0.35);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
         }
         .glass-effect:hover::before {
              box-shadow: 0 0 25px 5px var(--glow-color);
