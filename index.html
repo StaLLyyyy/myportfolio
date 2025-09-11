@@ -13,11 +13,11 @@
             box-sizing: border-box;
         }
         :root {
-            --glow-color: rgba(255, 255, 255, 0.7);
+            --glow-color: rgba(173, 216, 230, 0.9); /* Light Blue Glow */
             --glow-spread: 10px;
         }
         body {
-            background: #000;
+            background: #010409;
             color: #e0e0e0;
             font-family: 'JetBrains Mono', monospace;
             line-height: 1.6;
@@ -37,7 +37,7 @@
         }
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.95) 100%);
+            background: radial-gradient(ellipse at center, rgba(1, 4, 9, 0.3) 0%, rgba(1, 4, 9, 0.95) 100%);
             z-index: -1;
         }
 
@@ -46,11 +46,10 @@
             height: 100%;
             overflow-y: auto;
             overflow-x: hidden;
-            perspective: 2000px; /* Increased perspective for more depth */
+            perspective: 1500px; /* Adjusted for a balanced 3D effect */
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* --- Custom Glow Scrollbar --- */
         #parallax-container::-webkit-scrollbar { width: 10px; }
         #parallax-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         #parallax-container::-webkit-scrollbar-thumb {
@@ -70,7 +69,7 @@
             opacity: 0;
             filter: blur(10px);
             transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
-            transform-style: preserve-3d; /* Enable 3D space for children */
+            transform-style: preserve-3d;
         }
         .container.visible { opacity: 1; filter: blur(0); }
         .enter-text {
@@ -87,7 +86,7 @@
         header { 
             text-align: center; 
             margin-bottom: 5rem;
-            transform: translateZ(60px); /* Push header forward */
+            transform: translateZ(60px);
         }
         .header-title { 
             font-size: 2.8rem; 
@@ -96,11 +95,26 @@
             color: #fff;
             letter-spacing: 2px;
             position: relative;
+            display: inline-flex; /* Use flex for letter animation */
+        }
+        .header-title > span > span {
             display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), text-shadow 0.3s;
         }
-        .header-title span { 
-            text-shadow: 0 0 var(--glow-spread) var(--glow-color);
+        .header-title:hover > span > span {
+            transform: translateY(-5px);
+            text-shadow: 0 0 15px var(--glow-color);
         }
+        .header-title > span > span:nth-child(2n) {
+             transform: translateY(5px);
+        }
+        .header-title:hover > span > span:nth-child(even) {
+            transition-delay: 0.05s;
+        }
+        .header-title:hover > span > span:nth-child(odd) {
+            transition-delay: 0.1s;
+        }
+
         .header-title::after {
             content: ''; position: absolute; bottom: -10px; left: 50%;
             transform: translateX(-50%); width: 50%; height: 2px;
@@ -117,7 +131,7 @@
         .content-section {
             margin-bottom: 5rem;
             opacity: 0;
-            transform: translateY(30px) translateZ(40px); /* Give sections depth */
+            transform: translateY(30px) translateZ(40px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .content-section.in-view {
@@ -134,51 +148,48 @@
         }
 
         #about-me {
-            text-align: center;
-            color: #aaa;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            text-align: center; color: #aaa; max-width: 700px;
+            margin-left: auto; margin-right: auto;
         }
         #about-me p { margin-bottom: 2rem; }
-
+        
+        /* --- Glow Glassmorphism --- */
+        .glass-effect {
+            background: rgba(15, 20, 35, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 0px 0px var(--glow-color) inset;
+            transition: box-shadow 0.3s ease-out;
+        }
+        .glass-effect:hover {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 10px 2px var(--glow-color) inset;
+        }
+        
         .skills-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         .skill-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #bbb;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            color: #bbb; padding: 8px 15px; border-radius: 20px;
+            font-size: 0.9rem; transition: all 0.3s ease;
         }
         .skill-chip:hover {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px) translateZ(10px);
-            color: #fff;
+            transform: translateY(-3px) translateZ(10px); color: #fff;
         }
 
         .projects-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            perspective: 2000px;
+            gap: 2rem; perspective: 2000px;
         }
         .project-card {
-            border-radius: 15px; border: 1px solid #333; background: rgba(20, 20, 20, 0.5);
-            backdrop-filter: blur(10px); transform-style: preserve-3d;
+            border-radius: 15px; transform-style: preserve-3d;
             cursor: none; overflow: hidden;
             transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease-out, border-color 0.3s ease-out;
         }
         .project-card:hover {
-            border-color: #777;
-            box-shadow: 0 10px 50px -10px rgba(255, 255, 255, 0.2);
             transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) scale3d(1.05, 1.05, 1.05) translateZ(20px);
         }
         
         .card-content { 
-            padding: 1.5rem; 
-            transform: translateZ(50px); /* Push content even further forward */
+            padding: 1.5rem; transform: translateZ(50px);
             transition: opacity 0.3s ease-out;
         }
 
@@ -191,56 +202,20 @@
         .social-link:hover { color: #fff; text-shadow: 0 0 8px var(--glow-color); transform: scale(1.1) translateZ(10px); }
         .social-link svg { width: 24px; height: 24px; fill: currentColor; }
         
-        .player-container {
-            box-shadow: 0 0 45px 10px var(--glow-color), 0 0 20px 5px var(--glow-color);
-        }
-
-        .cursor-dot {
-            background-color: var(--glow-color);
-        }
-        .cursor-outline {
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        body.link-hover .cursor-outline {
-            border-color: rgba(255, 255, 255, 1);
-        }
-        
         #audio-player-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            width: auto;
-            height: 65px;
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid #333;
+            position: fixed; bottom: 20px; left: 50%; width: auto; height: 65px;
             border-radius: 35px;
-            display: flex;
-            align-items: center;
-            padding: 0 25px;
-            gap: 20px;
-            z-index: 100;
-            transform: translate(-50%, 150%);
+            display: flex; align-items: center; padding: 0 25px; gap: 20px;
+            z-index: 100; transform: translate(-50%, 150%);
             transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease-out;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3), 0 0 var(--bass-glow, 0px) var(--glow-color);
         }
         body.site-entered #audio-player-container { transform: translate(-50%, 0); }
-        
         .track-info { min-width: 150px; flex-shrink: 0; text-align: left; color: #888; font-size: 0.8rem; line-height: 1.2; }
         #audio-visualizer-canvas { height: 80%; flex-grow: 1; min-width: 150px; }
-        
-        #volume-slider::-webkit-slider-thumb {
-            box-shadow: 0 0 var(--glow-spread) var(--glow-color);
-        }
+        #volume-slider::-webkit-slider-thumb { box-shadow: 0 0 var(--glow-spread) var(--glow-color); }
 
-        .project-card:nth-child(1) { transition-delay: 0.1s; }
-        .project-card:nth-child(2) { transition-delay: 0.2s; }
-        .project-card:nth-child(3) { transition-delay: 0.3s; }
-        .project-card.opening .card-content { opacity: 0; transition: opacity 0.2s ease-in; }
         .card-thumbnail { width: 100%; height: 150px; border-radius: 8px; margin-bottom: 1rem; position: relative; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; transform: translateZ(20px); }
-        .card-thumbnail::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); transition: background 0.3s ease; }
-        .project-card:hover .card-thumbnail::after { background: rgba(0,0,0,0.1); }
-        .play-icon { width: 50px; height: 50px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
         .project-card:hover .play-icon { transform: scale(1.15); }
         .play-icon svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
         .project-card h3, .project-card p, .project-card .tags { transform: translateZ(20px); }
@@ -253,11 +228,10 @@
         .close-player { position: fixed; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; cursor: none; z-index: 1002; opacity: 0; transition: opacity 0.3s ease 0.4s, transform 0.3s ease; }
         .video-player-modal.active .close-player { opacity: 1; }
         .close-player:hover { transform: scale(1.2) rotate(90deg); }
-        .cursor-dot { position: fixed; width: 6px; height: 6px; border-radius: 50%; left: 0; top: 0; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
-        .cursor-outline { position: fixed; width: 30px; height: 30px; border-radius: 50%; left: 0; top: 0; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.1s linear; }
+        .cursor-dot { position: fixed; width: 6px; height: 6px; border-radius: 50%; left: 0; top: 0; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); background-color: var(--glow-color); }
+        .cursor-outline { position: fixed; width: 30px; height: 30px; border-radius: 50%; left: 0; top: 0; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.1s linear; border: 1px solid var(--glow-color); }
         body.link-hover .cursor-dot { transform: translate(-50%, -50%) scale(0.5); }
         body.link-hover .cursor-outline { width: 45px; height: 45px; }
-        .track-info span { display: block; }
         .track-info p { color: #fff; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .audio-controls { display: flex; align-items: center; gap: 15px; }
@@ -268,27 +242,12 @@
         #volume-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.2); border-radius: 2px; outline: none; transition: background 0.3s; }
         #volume-slider:hover { background: rgba(255, 255, 255, 0.3); }
         #volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: none; }
-        #volume-slider::-moz-range-thumb { width: 14px; height: 14px; background: #fff; border: none; border-radius: 50%; box-shadow: 0 0 var(--glow-spread) var(--glow-color); cursor: none; }
         
         @media (max-width: 768px) { 
-            .container { padding: 3rem 1rem 7rem 1rem; } 
-            .header-title { font-size: 2rem; } 
-            .subtitle { font-size: 0.9rem; } 
-            .links, .footer { font-size: 0.8rem; } 
-            #audio-player-container { padding: 0 15px; gap: 15px; } 
-            .track-info { display: none; } 
-        }
-        @media (max-width: 600px) {
-             .volume-slider-wrapper { display: none; }
-             .audio-controls { gap: 0; }
-             #audio-visualizer-canvas { min-width: 100px; flex-grow: 0; }
-        }
-        @media (max-width: 480px) { 
-            .header-title { font-size: 1.8rem; } 
-            #audio-player-container { justify-content: center; padding: 0 20px; } 
-            #audio-visualizer-canvas { display: none; }  
-        }
-
+            .header-title:hover, .header-title:hover::before, .header-title:hover::after { animation: none; }
+            .container { padding: 3rem 1rem 7rem 1rem; } .header-title { font-size: 2rem; } .subtitle { font-size: 0.9rem; } .links, .footer { font-size: 0.8rem; } #audio-player-container { padding: 0 15px; gap: 15px; } .track-info { display: none; } }
+        @media (max-width: 600px) { .volume-slider-wrapper { display: none; } .audio-controls { gap: 0; } #audio-visualizer-canvas { min-width: 100px; flex-grow: 0; } }
+        @media (max-width: 480px) { .header-title { font-size: 1.8rem; } #audio-player-container { justify-content: center; padding: 0 20px; } #audio-visualizer-canvas { display: none; } }
     </style>
 </head>
 <body>
@@ -305,7 +264,7 @@
     <div id="parallax-container">
         <main id="content" class="container hidden">
              <header>
-                 <h1 class="header-title"><span>[//] ViewModel</span></h1>
+                 <h1 class="header-title" id="main-title"></h1>
                  <p class="subtitle">A collection of viewmodel animations for Roblox</p>
              </header>
 
@@ -315,17 +274,17 @@
                     I'm a passionate animator and developer specializing in creating fluid, high-impact viewmodel animations for Roblox experiences. With a keen eye for detail and a deep understanding of game mechanics, I bring virtual worlds to life through motion.
                 </p>
                 <div class="skills-grid">
-                    <span class="skill-chip">Blender</span>
-                    <span class="skill-chip">Animation</span>
-                    <span class="skill-chip">Scripting</span>
-                    <span class="skill-chip">Game Development</span>
+                    <span class="skill-chip glass-effect">Blender</span>
+                    <span class="skill-chip glass-effect">Animation</span>
+                    <span class="skill-chip glass-effect">Scripting</span>
+                    <span class="skill-chip glass-effect">Game Development</span>
                 </div>
             </section>
             
             <section id="projects" class="content-section">
                  <h2 class="section-title">> Projects</h2>
                 <div class="projects-grid">
-                    <div class="project-card" data-video-id="MPqN6wEb7rc">
+                    <div class="project-card glass-effect" data-video-id="MPqN6wEb7rc">
                         <div class="card-content">
                             <div class="card-thumbnail" style="background-image: url('https://img.youtube.com/vi/MPqN6wEb7rc/hqdefault.jpg');"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"></path></svg></div></div>
                             <h3>MTZ | Viewmodel Showcase</h3>
@@ -333,7 +292,7 @@
                             <div class="tags"><span class="tag">Blender</span><span class="tag">Roblox Studio</span><span class="tag">VFX</span></div>
                         </div>
                     </div>
-                    <div class="project-card" data-video-id="OhKiR6JzLD4">
+                    <div class="project-card glass-effect" data-video-id="OhKiR6JzLD4">
                          <div class="card-content">
                             <div class="card-thumbnail" style="background-image: url('https://img.youtube.com/vi/OhKiR6JzLD4/hqdefault.jpg');"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"></path></svg></div></div>
                             <h3>SVD (Dragunov) | Showcase</h3>
@@ -341,7 +300,7 @@
                             <div class="tags"><span class="tag">Blender</span><span class="tag">VFX</span></div>
                         </div>
                     </div>
-                    <div class="project-card" data-video-id="BsciCsfdxBE">
+                    <div class="project-card glass-effect" data-video-id="BsciCsfdxBE">
                         <div class="card-content">
                             <div class="card-thumbnail" style="background-image: url('https://img.youtube.com/vi/BsciCsfdxBE/hqdefault.jpg');"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"></path></svg></div></div>
                             <h3>Desert Eagle .50 | Showcase</h3>
@@ -375,7 +334,7 @@
         </div>
     </div>
     
-    <div id="audio-player-container">
+    <div id="audio-player-container" class="glass-effect">
         <div class="track-info">
             <span>Now Playing:</span>
             <p id="track-title"></p>
@@ -394,6 +353,19 @@
     <audio id="bg-music" crossorigin="anonymous"></audio>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const titleText = "[//] ViewModel";
+            const titleElement = document.getElementById('main-title');
+            const span = document.createElement('span');
+            titleText.split('').forEach(char => {
+                const innerSpan = document.createElement('span');
+                innerSpan.textContent = char;
+                if (char === ' ') innerSpan.style.width = '0.5ch';
+                span.appendChild(innerSpan);
+            });
+            titleElement.appendChild(span);
+        });
+
         const visitorCounterElement = document.getElementById('visitor-counter');
         function updateVisitorCount() {
             const countKey = 'stallyyyy-viewmodel-portfolio'; 
@@ -443,7 +415,7 @@
         let audioContext, analyser, sourceNode, dataArray;
         let userVolume = 0.7;
 
-        let scene, camera, renderer, particles, clock;
+        let scene, camera, renderer, clock, lines, particles;
         const bgCanvas = document.getElementById('bg-canvas');
         let targetCameraPos = { x: 0, y: 0 };
         
@@ -451,85 +423,101 @@
             clock = new THREE.Clock();
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 50;
+            camera.position.z = 100;
 
             renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const particleCount = 10000;
+            const particleCount = 3000;
             const positions = new Float32Array(particleCount * 3);
-            const sizes = new Float32Array(particleCount);
             const randoms = new Float32Array(particleCount);
             
             for (let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 250;
-                positions[i3 + 1] = (Math.random() - 0.5) * 250;
+                positions[i3] = (Math.random() - 0.5) * 200;
+                positions[i3 + 1] = (Math.random() - 0.5) * 200;
                 positions[i3 + 2] = (Math.random() - 0.5) * 200;
-                sizes[i] = Math.random() * 2.0 + 0.5;
                 randoms[i] = Math.random();
             }
 
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
-            geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
             
-            const material = new THREE.ShaderMaterial({
+            const particleMaterial = new THREE.ShaderMaterial({
                 vertexShader: `
-                    attribute float aSize;
                     attribute float aRandom;
                     uniform float uTime;
                     uniform float uBass;
-                    varying float vRandom;
                     void main() {
-                        vRandom = aRandom;
                         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-                        
-                        float angle = uTime * 0.2 * (aRandom * 0.5 + 0.5);
-                        float radius = 1.0 + aRandom * 5.0;
-                        modelPosition.x += cos(angle) * radius;
-                        modelPosition.y += sin(angle) * radius;
-                        modelPosition.z += sin(angle * (aRandom * 1.5)) * radius;
-
-                        float reactivity = pow(aRandom, 2.0) * uBass * 40.0;
-                        modelPosition.z += reactivity;
-
+                        modelPosition.y += sin(uTime * aRandom * 0.5) * 5.0;
                         vec4 viewPosition = viewMatrix * modelPosition;
                         gl_Position = projectionMatrix * viewPosition;
-                        gl_PointSize = aSize * (150.0 / -viewPosition.z) * (1.0 + uBass * aRandom * 2.0);
+                        gl_PointSize = (aRandom * 2.0 + 1.0) * (150.0 / -viewPosition.z) * (1.0 + uBass * aRandom);
                     }
                 `,
                 fragmentShader: `
                     uniform float uBass;
-                    uniform float uTime;
-                    varying float vRandom;
                     void main() {
                         float dist = distance(gl_PointCoord, vec2(0.5));
-                        float strength = pow(1.0 - dist, 3.0);
-                        
-                        vec3 baseColor = vec3(0.8, 0.8, 1.0);
-                        vec3 accentColor = vec3(1.0, 0.5, 1.0);
-                        vec3 finalColor = mix(baseColor, accentColor, uBass * 2.0 * vRandom);
-
-                        float flicker = sin(uTime * 20.0 * vRandom) * 0.1 + 0.9;
-                        float finalAlpha = strength * (1.5 + uBass * 3.0) * flicker;
-
-                        gl_FragColor = vec4(finalColor, finalAlpha);
+                        float strength = pow(1.0 - dist, 2.0);
+                        vec3 color = vec3(0.6, 0.7, 1.0);
+                        gl_FragColor = vec4(color, strength * (0.5 + uBass * 1.5));
                     }
                 `,
-                uniforms: {
-                    uTime: { value: 0 },
-                    uBass: { value: 0 },
-                },
-                transparent: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
+                 uniforms: { uTime: { value: 0 }, uBass: { value: 0 } },
+                transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
             });
 
-            particles = new THREE.Points(geometry, material);
+            particles = new THREE.Points(particleGeometry, particleMaterial);
             scene.add(particles);
+
+            const lineVertices = [];
+            const p = new THREE.Vector3();
+            for (let i = 0; i < particleCount; i++) {
+                p.fromBufferAttribute(particleGeometry.attributes.position, i);
+                const closest = [];
+                for (let j = 0; j < particleCount; j++) {
+                    if (i === j) continue;
+                    const p2 = new THREE.Vector3().fromBufferAttribute(particleGeometry.attributes.position, j);
+                    const dist = p.distanceTo(p2);
+                    if (dist < 20) {
+                         closest.push({dist, index: j});
+                    }
+                }
+                closest.sort((a,b) => a.dist - b.dist);
+                for(let k = 0; k < Math.min(2, closest.length); k++) {
+                    lineVertices.push(p.x, p.y, p.z);
+                    const p2 = new THREE.Vector3().fromBufferAttribute(particleGeometry.attributes.position, closest[k].index);
+                    lineVertices.push(p2.x, p2.y, p2.z);
+                }
+            }
+
+            const lineGeometry = new THREE.BufferGeometry();
+            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lineVertices, 3));
+            const lineMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    uniform float uBass;
+                    void main() {
+                        vec4 pos = vec4(position, 1.0);
+                        pos.z *= 1.0 + uBass * 0.2;
+                        gl_Position = projectionMatrix * modelViewMatrix * pos;
+                    }
+                `,
+                fragmentShader: `
+                    uniform float uBass;
+                    void main() {
+                        gl_FragColor = vec4(0.5, 0.6, 1.0, 0.1 + uBass * 0.5);
+                    }
+                `,
+                uniforms: { uBass: { value: 0 } },
+                transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+
+            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
 
             window.addEventListener('resize', onWindowResize, false);
             animate();
@@ -555,38 +543,32 @@
                 bass = Math.pow(bass, 1.5);
                 if (bass > 1.0) bass = 1.0;
                 
-                if(particles) particles.material.uniforms.uBass.value = bass;
-                audioPlayerContainer.style.setProperty('--bass-glow', `${bass * 30}px`);
-                document.documentElement.style.setProperty('--glow-spread', `${10 + bass * 15}px`);
+                const smoothedBass = THREE.MathUtils.lerp(particles.material.uniforms.uBass.value, bass, 0.1);
+                particles.material.uniforms.uBass.value = smoothedBass;
+                lines.material.uniforms.uBass.value = smoothedBass;
+
+                audioPlayerContainer.style.setProperty('--bass-glow', `${smoothedBass * 30}px`);
+                document.documentElement.style.setProperty('--glow-spread', `${10 + smoothedBass * 15}px`);
             }
             
             if(particles) {
-                particles.rotation.y = elapsedTime * 0.05;
-                particles.rotation.z = elapsedTime * 0.02;
+                particles.rotation.y = elapsedTime * 0.03;
+                particles.rotation.x = elapsedTime * 0.02;
+                lines.rotation.copy(particles.rotation);
             }
 
             if(camera) {
-                const shakeAmplitude = bass * 0.8; 
-                const rollAmplitude = bass * 0.04; 
+                const shakeAmplitude = bass * 0.5; 
                 const zoomIntensity = bass * 20.0;
-                const fovIntensity = bass * 10;
+                
+                const targetX = targetCameraPos.x * 5 + (Math.random() - 0.5) * shakeAmplitude;
+                const targetY = -targetCameraPos.y * 5 + (Math.random() - 0.5) * shakeAmplitude;
+                const targetZ = 100 - zoomIntensity;
 
-                const shakeX = Math.sin(elapsedTime * 30) * Math.cos(elapsedTime * 15) * shakeAmplitude;
-                const shakeY = Math.cos(elapsedTime * 25) * Math.sin(elapsedTime * 18) * shakeAmplitude;
-                const shakeZRoll = Math.sin(elapsedTime * 20) * rollAmplitude;
-
-                const targetX = targetCameraPos.x * 2 + shakeX;
-                const targetY = -targetCameraPos.y * 2 + shakeY;
-                const targetZ = 50 - zoomIntensity;
-                const targetFov = 75 - fovIntensity;
-
-                camera.position.x += (targetX - camera.position.x) * 0.12;
-                camera.position.y += (targetY - camera.position.y) * 0.12;
-                camera.position.z += (targetZ - camera.position.z) * 0.12;
-                camera.rotation.z += (shakeZRoll - camera.rotation.z) * 0.1;
-                camera.fov += (targetFov - camera.fov) * 0.1;
-                camera.updateProjectionMatrix();
-
+                camera.position.x += (targetX - camera.position.x) * 0.08;
+                camera.position.y += (targetY - camera.position.y) * 0.08;
+                camera.position.z += (targetZ - camera.position.z) * 0.08;
+                
                 camera.lookAt(scene.position);
             }
 
