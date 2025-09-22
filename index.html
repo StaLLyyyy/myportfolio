@@ -109,7 +109,7 @@
             text-shadow: 0 0 15px var(--glow-color);
         }
         .header-title > span > span:nth-child(2n) {
-             transform: translateY(5px);
+            transform: translateY(5px);
         }
         .header-title:hover > span > span:nth-child(even) {
             transition-delay: 0.05s;
@@ -182,8 +182,8 @@
             box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
         }
         .glass-effect:hover::before {
-             box-shadow: 0 0 25px 5px var(--glow-color);
-             opacity: 1;
+            box-shadow: 0 0 25px 5px var(--glow-color);
+            opacity: 1;
         }
         
         .skills-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
@@ -236,8 +236,31 @@
         #volume-slider::-webkit-slider-thumb { box-shadow: 0 0 var(--glow-spread) var(--glow-color); }
 
         .card-thumbnail { width: 100%; height: 150px; border-radius: 8px; margin-bottom: 1rem; position: relative; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; transform: translateZ(20px); }
-        .project-card:hover .play-icon { transform: scale(1.15); }
-        .play-icon svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
+        
+        .play-icon {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .project-card:hover .play-icon {
+            transform: scale(1.15);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .play-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+        }
+
         .project-card h3, .project-card p, .project-card .tags { transform: translateZ(20px); }
 
         .video-player-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
@@ -312,9 +335,9 @@
                             <div class="tags"><span class="tag">Blender</span><span class="tag">Roblox Studio</span><span class="tag">VFX</span></div>
                         </div>
                     </div>
-                    <div class="project-card glass-effect" data-video-id="OhKiR6JzLD4">
+                    <div class="project-card glass-effect" data-video-id="Ck6Qf-vdFV8">
                          <div class="card-content">
-                            <div class="card-thumbnail" style="background-image: url('https://img.youtube.com/vi/OhKiR6JzLD4/hqdefault.jpg');"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"></path></svg></div></div>
+                            <div class="card-thumbnail" style="background-image: url('https://img.youtube.com/vi/Ck6Qf-vdFV8/hqdefault.jpg');"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"></path></svg></div></div>
                             <h3>SVD (Dragunov) | Showcase</h3>
                             <p>Detailed showcase of a complete SVD animation set for Roblox.</p>
                             <div class="tags"><span class="tag">Blender</span><span class="tag">VFX</span></div>
@@ -333,12 +356,12 @@
 
             <div class="links">
                  <div class="socials">
-                       <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
-                           <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
-                       </a>
-                       <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
-                           <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
-                       </a>
+                         <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
+                             <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
+                         </a>
+                         <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
+                             <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
+                         </a>
                  </div>
             </div>
             <div class="footer">
