@@ -220,12 +220,12 @@
         .socials { display: flex; justify-content: center; gap: 25px; }
         .social-link { color: #666; transition: color 0.3s, text-shadow 0.3s, transform 0.3s; }
         .social-link:hover { color: #fff; text-shadow: 0 0 8px var(--glow-color); transform: scale(1.1) translateZ(10px); }
-        .social-link svg { width: 24px; height: 24px; fill: currentColor; }
+        .social-link svg { width: 26px; height: 26px; fill: currentColor; }
         
         #audio-player-container {
             position: fixed; bottom: 20px; left: 50%; width: auto; height: 65px;
             border-radius: 35px;
-            display: flex; align-items: center; padding: 0 25px; gap: 20px;
+            display: flex; align-items: center; padding: 0 25px; gap: 15px;
             z-index: 100; transform: translate(-50%, 150%);
             transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease-out;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3), 0 0 var(--bass-glow, 0px) var(--glow-color);
@@ -278,6 +278,14 @@
         .track-info p { color: #fff; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .audio-controls { display: flex; align-items: center; gap: 15px; }
+        .control-btn {
+            width: 40px; height: 40px; background: transparent; border: none; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            transition: background 0.3s; flex-shrink: 0; cursor: none;
+            padding: 0;
+        }
+        .control-btn:hover { background: rgba(40, 40, 40, 0.8); }
+        .control-btn svg { width: 22px; height: 22px; fill: #ddd; }
         #audio-control { width: 40px; height: 40px; background: rgba(20, 20, 20, 0.5); border: 1px solid #444; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: background 0.3s; flex-shrink: 0; }
         #audio-control:hover { background: rgba(40, 40, 40, 0.8); }
         #audio-control svg { width: 20px; height: 20px; fill: #ddd; }
@@ -286,11 +294,30 @@
         #volume-slider:hover { background: rgba(255, 255, 255, 0.3); }
         #volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: none; }
         
+        .audio-mixer { display: flex; gap: 10px; }
+        .mixer-btn { background: transparent; border: 1px solid #444; color: #888; padding: 5px 10px; font-family: 'Space Mono', monospace; border-radius: 15px; cursor: none; transition: all 0.3s ease; font-size: 0.8rem; }
+        .mixer-btn:hover { color: #fff; border-color: #fff; text-shadow: 0 0 5px var(--glow-color); }
+        .mixer-btn.active { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); box-shadow: 0 0 8px var(--glow-color); }
+
+        .game-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); opacity: 1; visibility: visible; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        .game-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .game-container { padding: 2rem; border-radius: 15px; text-align: center; position: relative; }
+        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: #fff; width: 100%; }
+        .game-title { font-size: 1.5rem; text-shadow: 0 0 8px var(--glow-color); }
+        #snake-score { font-size: 1.2rem; }
+        #close-snake { position: absolute; top: 5px; right: 15px; font-size: 2.5rem; color: #fff; cursor: none; transition: transform 0.3s ease; user-select: none; }
+        #close-snake:hover { transform: scale(1.2) rotate(90deg); }
+        #snake-canvas { background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 0 15px rgba(0,0,0,0.5) inset; }
+        #snake-game-over { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 2rem; text-align: center; background: rgba(0,0,0,0.5); padding: 2rem; border-radius: 10px; backdrop-filter: blur(5px); }
+        #snake-game-over.hidden { display: none; }
+        #snake-restart-btn { margin-top: 1rem; padding: 10px 20px; font-family: 'Space Mono', monospace; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #fff; border-radius: 5px; cursor: none; transition: background 0.3s; }
+        #snake-restart-btn:hover { background: rgba(255,255,255,0.3); }
+
         @media (max-width: 768px) { 
             .header-title:hover, .header-title:hover::before, .header-title:hover::after { animation: none; }
-            .container { padding: 3rem 1rem 7rem 1rem; } .header-title { font-size: 2rem; } .subtitle { font-size: 0.9rem; } .links, .footer { font-size: 0.8rem; } #audio-player-container { padding: 0 15px; gap: 15px; } .track-info { display: none; } }
+            .container { padding: 3rem 1rem 7rem 1rem; } .header-title { font-size: 2rem; } .subtitle { font-size: 0.9rem; } .links, .footer { font-size: 0.8rem; } #audio-player-container { padding: 0 15px; gap: 10px; flex-wrap: wrap; height: auto; padding-bottom: 10px;} .track-info { display: none; } .audio-mixer { order: 3; width: 100%; justify-content: center; } }
         @media (max-width: 600px) { .volume-slider-wrapper { display: none; } .audio-controls { gap: 0; } #audio-visualizer-canvas { min-width: 100px; flex-grow: 0; } }
-        @media (max-width: 480px) { .header-title { font-size: 1.8rem; } #audio-player-container { justify-content: center; padding: 0 20px; } #audio-visualizer-canvas { display: none; } }
+        @media (max-width: 480px) { .header-title { font-size: 1.8rem; } #audio-player-container { justify-content: center; padding: 0 20px; } #audio-visualizer-canvas { display: none; } .audio-mixer { font-size: 0.7rem; gap: 5px;} .mixer-btn {padding: 4px 8px;}}
     </style>
 </head>
 <body>
@@ -321,6 +348,7 @@
                     <span class="skill-chip glass-effect">Animation</span>
                     <span class="skill-chip glass-effect">Scripting</span>
                     <span class="skill-chip glass-effect">Game Development</span>
+                    <span id="play-snake-btn" class="skill-chip glass-effect">Play Snake</span>
                 </div>
             </section>
             
@@ -356,12 +384,18 @@
 
             <div class="links">
                  <div class="socials">
-                         <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
-                             <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
-                         </a>
-                         <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
-                             <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
-                         </a>
+                     <a href="https://www.youtube.com/@stallyyyy" target="_blank" class="social-link">
+                         <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.18,18.8 18.27,18.9 17.12,18.94C15.97,18.97 14.94,19 13.86,19H10.14C9.06,19 8.03,18.97 6.88,18.94C5.73,18.9 4.82,18.8 4.17,18.65C3.27,18.41 2.69,17.73 2.44,16.83C2.16,15.8 2,14.19 2,12L2.06,11.16C2.06,10.56 2.09,9.87 2.16,9.07C2.22,8.27 2.31,7.64 2.44,7.17C2.69,6.27 3.27,5.59 4.17,5.35C4.82,5.2 5.73,5.1 6.88,5.06C8.03,5.03 9.06,5 10.14,5H13.86C14.94,5 15.97,5.03 17.12,5.06C18.27,5.1 19.18,5.2 19.83,5.35C20.73,5.59 21.31,6.27 21.56,7.17Z" /></svg>
+                     </a>
+                     <a href="https://t.me/StaLLyyyyyPortfolio" target="_blank" class="social-link">
+                         <svg viewBox="0 0 24 24"><path d="M9.78,18.65L10.26,14.21L18.73,7.45C19.19,7.08 18.84,6.91 18.25,7.16L5.32,12.84C4.6,13.18 4.61,13.7 5.17,13.88L8.6,14.92L15.25,9.5C15.6,9.25 15.94,9.41 15.65,9.66L9.78,18.65Z" /></svg>
+                     </a>
+                     <a href="https://www.roblox.com/users/1921057705/profile" target="_blank" class="social-link" title="Roblox">
+                        <svg viewBox="0 0 24 24"><path d="M16.29,3.71,6,6,3.71,16.29,14,14l2.29-10.29ZM8,18l10.29-2.29L20.58,5.42,10,8,8,18Z"/></svg>
+                     </a>
+                     <a href="https://steamcommunity.com/id/StaLLyyyy/" target="_blank" class="social-link" title="Steam">
+                        <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,5A7,7 0 0,1 19,12C19,14.22 17.9,16.14 16.33,17.29L12.4,14.8C12.8,14.63 13.16,14.38 13.45,14.05L15.3,15.9C14.73,16.44 14.05,16.86 13.29,17.11L15.71,21C18.61,19.43 20.8,16.27 20.94,12.5C21.1,8.39 18.21,4.9 14.1,4.95C13.13,4.94 12.18,5.15 11.33,5.55L12.9,7.12C13.4,6.9 13.93,6.8 14.5,6.8A4.2,4.2 0 0,1 18.7,11A4.2,4.2 0 0,1 14.5,15.2C13.93,15.2 13.4,15.1 12.9,14.9L11.33,16.45C12.18,16.85 13.13,17.06 14.1,17.05C18.21,17.1 21.1,13.61 20.94,9.5C20.8,5.73 18.61,2.57 15.71,1L13.29,4.89C14.05,5.14 14.73,5.56 15.3,6.1L13.45,7.95C13.16,7.62 12.8,7.37 12.4,7.2L8.29,4.71C6.1,5.9 4.9,8.28 5,10.7C5.1,14.8 8.4,17.9 12.5,17.75C13.47,17.76 14.42,17.55 15.27,17.15L13.7,15.58C13.2,15.8 12.67,15.9 12.1,15.9A4.2,4.2 0 0,1 7.9,11.7A4.2,4.2 0 0,1 12.1,7.5C12.67,7.5 13.2,7.6 13.7,7.8L15.27,6.25C14.42,5.85 13.47,5.64 12.5,5.65C8.4,5.6 5.1,9.2 5,13.3C4.9,16.72 6.39,19.64 8.91,21.11L6.5,17.29C4.1,16.1 3.1,13.72 3,11.3C2.9,7.2 5.8,3.9 9.9,3.05L12,2Z" /></svg>
+                     </a>
                  </div>
             </div>
             <div class="footer">
@@ -377,17 +411,43 @@
         </div>
     </div>
     
+    <div id="snake-game-modal" class="game-modal hidden">
+        <div class="game-container glass-effect">
+            <div class="game-header">
+                <h2 class="game-title">SNAKE</h2>
+                <div id="snake-score">Score: 0</div>
+                <div id="close-snake" class="close-player">&times;</div>
+            </div>
+            <canvas id="snake-canvas"></canvas>
+            <div id="snake-game-over" class="hidden">
+                <p>Game Over!</p>
+                <button id="snake-restart-btn">Restart</button>
+            </div>
+        </div>
+    </div>
+
     <div id="audio-player-container" class="glass-effect">
         <div class="track-info">
             <span>Now Playing:</span>
             <p id="track-title"></p>
         </div>
+        <div class="audio-mixer">
+            <button class="mixer-btn active" data-effect="lowpass">Underwater</button>
+            <button class="mixer-btn" data-effect="standard">Standard</button>
+            <button class="mixer-btn" data-effect="echo">Echo</button>
+        </div>
         <canvas id="audio-visualizer-canvas"></canvas>
         <div class="audio-controls">
+            <button id="prev-song" class="control-btn" title="Previous Song">
+                <svg viewBox="0 0 24 24"><path d="M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z" /></svg>
+            </button>
             <div id="audio-control">
                 <svg class="volume-on" viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" /></svg>
                 <svg class="volume-off hidden" viewBox="0 0 24 24"><path d="M12,4L7,9H3V15H7L12,20V4M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.52C15.58,17.87 14.83,18.12 14,18.31V20.39C15.18,20.14 16.28,19.66 17.24,19L19.73,21.46L21,20.21L4.27,3Z" /></svg>
             </div>
+            <button id="next-song" class="control-btn" title="Next Song">
+                <svg viewBox="0 0 24 24"><path d="M16,18H18V6H16M6,18L14.5,12L6,6V18Z" /></svg>
+            </button>
              <div class="volume-slider-wrapper">
                  <input type="range" id="volume-slider" min="0" max="100" value="70">
              </div>
@@ -396,6 +456,18 @@
     <audio id="bg-music" crossorigin="anonymous"></audio>
 
     <script>
+        // Declarations moved to the top to avoid ReferenceError
+        let scene, camera, renderer, clock, particles, line;
+        let audioContext, analyser, sourceNode, dataArray;
+        let mainGain, dryGain, wetGainLowpass, wetGainEcho;
+        let lowPassFilter, delayNode;
+        let currentEffect = 'lowpass';
+        let currentSongIndex = 0;
+        let userVolume = 0.7;
+        let targetCameraPos = { x: 0, y: 0 };
+        const bgCanvas = document.getElementById('bg-canvas');
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const titleText = "[//] ViewModel";
             const titleElement = document.getElementById('main-title');
@@ -450,18 +522,20 @@
             { src: 'evo9 - тупой клубняк для твоей пизды.mp3', title: 'тупой клубняк', artist: 'evo9' },
             { src: 'evo9 - меня рвёт.mp3', title: 'меня рвёт', artist: 'evo9' }
         ];
-        let currentSongIndex = -1;
+        
+        function shufflePlaylist(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shufflePlaylist(playlist);
         
         const bgMusic = document.getElementById('bg-music');
         const trackTitleElement = document.getElementById('track-title');
         const audioPlayerContainer = document.getElementById('audio-player-container');
-        let audioContext, analyser, sourceNode, dataArray, lowPassFilter;
-        let userVolume = 0.7;
 
-        let scene, camera, renderer, clock, particles, line;
-        const bgCanvas = document.getElementById('bg-canvas');
-        let targetCameraPos = { x: 0, y: 0 };
-        
+        // --- Three.js Background ---
         function initThreeJS() {
             clock = new THREE.Clock();
             scene = new THREE.Scene();
@@ -472,7 +546,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Particles
             const particlesCount = 3000;
             const posArray = new Float32Array(particlesCount * 3);
             for(let i = 0; i < particlesCount * 3; i++) {
@@ -482,34 +555,14 @@
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
             const particleMaterial = new THREE.ShaderMaterial({
-                vertexShader: `
-                    uniform float uBass;
-                    varying float vViewZ;
-                    void main() {
-                        vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-                        vec4 viewPosition = viewMatrix * modelPosition;
-                        vViewZ = viewPosition.z;
-                        gl_Position = projectionMatrix * viewPosition;
-                        gl_PointSize = 2.0 * (1.0 + uBass) * (200.0 / -viewPosition.z);
-                    }
-                `,
-                fragmentShader: `
-                    varying float vViewZ;
-                    void main() {
-                        float dist = distance(gl_PointCoord, vec2(0.5));
-                        float strength = pow(1.0 - dist, 2.0);
-                        strength *= smoothstep(-20.0, -120.0, vViewZ);
-                        gl_FragColor = vec4(vec3(1.0), strength);
-                    }
-                `,
+                vertexShader: `uniform float uBass; varying float vViewZ; void main() { vec4 modelPosition = modelMatrix * vec4(position, 1.0); vec4 viewPosition = viewMatrix * modelPosition; vViewZ = viewPosition.z; gl_Position = projectionMatrix * viewPosition; gl_PointSize = 2.0 * (1.0 + uBass) * (200.0 / -viewPosition.z); }`,
+                fragmentShader: `varying float vViewZ; void main() { float dist = distance(gl_PointCoord, vec2(0.5)); float strength = pow(1.0 - dist, 2.0); strength *= smoothstep(-20.0, -120.0, vViewZ); gl_FragColor = vec4(vec3(1.0), strength); }`,
                 uniforms: { uBass: { value: 0 } },
                 transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
             });
-
             particles = new THREE.Points(particlesGeometry, particleMaterial);
             scene.add(particles);
 
-            // Lines
             const lineGeometry = new THREE.BufferGeometry();
             const linePositions = [];
             const particlesPosition = particlesGeometry.attributes.position.array;
@@ -521,24 +574,13 @@
             lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
 
             const lineMaterial = new THREE.ShaderMaterial({
-                 vertexShader: `
-                    void main() {
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform float uBass;
-                    void main() {
-                        gl_FragColor = vec4(vec3(1.0), uBass * 0.25);
-                    }
-                `,
+                 vertexShader: `void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+                fragmentShader: `uniform float uBass; void main() { gl_FragColor = vec4(vec3(1.0), uBass * 0.25); }`,
                 uniforms: { uBass: { value: 0 } },
                 transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
             });
-
             line = new THREE.LineSegments(lineGeometry, lineMaterial);
             scene.add(line);
-
 
             window.addEventListener('resize', onWindowResize, false);
             animate();
@@ -553,10 +595,9 @@
 
         function animate() {
             const elapsedTime = clock.getElapsedTime();
-            
             requestAnimationFrame(animate);
             let bass = 0;
-            if (analyser && dataArray) {
+            if (audioContext && analyser && dataArray) {
                 analyser.getByteFrequencyData(dataArray);
                 const bassFrequencies = dataArray.slice(1, 5);
                 bass = bassFrequencies.reduce((a, b) => a + b) / bassFrequencies.length / 255;
@@ -581,7 +622,6 @@
 
             if(camera) {
                 const zoomIntensity = bass * 25.0;
-                
                 const targetX = targetCameraPos.x * 10;
                 const targetY = -targetCameraPos.y * 10;
                 const targetZ = 80 - zoomIntensity;
@@ -592,36 +632,102 @@
                 
                 camera.lookAt(scene.position);
             }
-
             if(renderer) renderer.render(scene, camera);
         }
-        
         initThreeJS();
 
-        function setAndLoadRandomSong() { let newSongIndex; do { newSongIndex = Math.floor(Math.random() * playlist.length); } while (playlist.length > 1 && newSongIndex === currentSongIndex); currentSongIndex = newSongIndex; const song = playlist[currentSongIndex]; bgMusic.src = song.src; trackTitleElement.textContent = `${song.title} - ${song.artist}`; bgMusic.load(); }
-        bgMusic.addEventListener('ended', () => { setAndLoadRandomSong(); bgMusic.play(); });
+        // --- Audio System ---
+        function setupAudioNodes() {
+            sourceNode = audioContext.createMediaElementSource(bgMusic);
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 128;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            mainGain = audioContext.createGain();
+            dryGain = audioContext.createGain();
+            wetGainLowpass = audioContext.createGain();
+            wetGainEcho = audioContext.createGain();
+            
+            lowPassFilter = audioContext.createBiquadFilter();
+            lowPassFilter.type = 'lowpass';
+            lowPassFilter.frequency.value = 900;
+            lowPassFilter.Q.value = 1.2;
+
+            delayNode = audioContext.createDelay(5.0);
+            delayNode.delayTime.value = 0.3;
+            const feedback = audioContext.createGain();
+            feedback.gain.value = 0.4;
+            delayNode.connect(feedback);
+            feedback.connect(delayNode);
+            
+            sourceNode.connect(mainGain);
+            mainGain.connect(dryGain);
+            mainGain.connect(lowPassFilter);
+            mainGain.connect(delayNode);
+            
+            lowPassFilter.connect(wetGainLowpass);
+            delayNode.connect(wetGainEcho);
+
+            dryGain.connect(analyser);
+            wetGainLowpass.connect(analyser);
+            wetGainEcho.connect(analyser);
+            
+            analyser.connect(audioContext.destination);
+            setAudioEffect(currentEffect);
+        }
+
+        function setAudioEffect(effectName) {
+            currentEffect = effectName;
+            if (!audioContext) return;
+            dryGain.gain.setValueAtTime(0, audioContext.currentTime);
+            wetGainLowpass.gain.setValueAtTime(0, audioContext.currentTime);
+            wetGainEcho.gain.setValueAtTime(0, audioContext.currentTime);
+
+            if (effectName === 'standard') {
+                dryGain.gain.setValueAtTime(1, audioContext.currentTime);
+            } else if (effectName === 'lowpass') {
+                wetGainLowpass.gain.setValueAtTime(1, audioContext.currentTime);
+            } else if (effectName === 'echo') {
+                dryGain.gain.setValueAtTime(1, audioContext.currentTime);
+                wetGainEcho.gain.setValueAtTime(0.5, audioContext.currentTime);
+            }
+            
+            document.querySelectorAll('.mixer-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.effect === effectName);
+            });
+        }
+        
+        function loadSong(index) {
+            if(index < 0 || index >= playlist.length) return;
+            currentSongIndex = index;
+            const song = playlist[currentSongIndex];
+            bgMusic.src = song.src;
+            trackTitleElement.textContent = `${song.title} - ${song.artist}`;
+            bgMusic.load();
+        }
+
+        function playNextSong() {
+            if (!audioContext) return;
+            const nextIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(nextIndex);
+            bgMusic.play().catch(e => console.error("Autoplay failed", e));
+        }
+
+        function playPrevSong() {
+            if (!audioContext) return;
+            const prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(prevIndex);
+            bgMusic.play().catch(e => console.error("Autoplay failed", e));
+        }
+        
+        bgMusic.addEventListener('ended', playNextSong);
         
         enterTextElement.addEventListener('click', function() { 
             if (!audioContext) { 
                 updateVisitorCount(); 
                 audioContext = new (window.AudioContext || window.webkitAudioContext)(); 
-                setAndLoadRandomSong(); 
-                sourceNode = audioContext.createMediaElementSource(bgMusic); 
-                analyser = audioContext.createAnalyser(); 
-                
-                // --- Underwater Effect (Low-pass filter) ---
-                lowPassFilter = audioContext.createBiquadFilter();
-                lowPassFilter.type = 'lowpass';
-                lowPassFilter.frequency.value = 900; // Cut off high frequencies
-                lowPassFilter.Q.value = 1.2; // Add slight resonance
-                
-                // Connect nodes: source -> filter -> analyser -> destination
-                sourceNode.connect(lowPassFilter);
-                lowPassFilter.connect(analyser);
-                analyser.connect(audioContext.destination); 
-                
-                analyser.fftSize = 128; 
-                dataArray = new Uint8Array(analyser.frequencyBinCount); 
+                loadSong(0); 
+                setupAudioNodes();
                 runVisualizer(); 
             } 
             audioContext.resume().then(() => {
@@ -641,11 +747,10 @@
         });
         
         const visualizerCanvas = document.getElementById('audio-visualizer-canvas');
-        const ctx = visualizerCanvas.getContext('2d');
+        const vCtx = visualizerCanvas.getContext('2d');
         function runVisualizer() {
             visualizerCanvas.width = visualizerCanvas.offsetWidth;
             visualizerCanvas.height = visualizerCanvas.offsetHeight;
-            
             const bufferLength = analyser.frequencyBinCount;
             const draw = () => {
                 requestAnimationFrame(draw);
@@ -653,17 +758,18 @@
                 const width = visualizerCanvas.width;
                 const height = visualizerCanvas.height;
                 const barWidth = width / bufferLength;
-                ctx.clearRect(0, 0, width, height);
+                vCtx.clearRect(0, 0, width, height);
                 for (let i = 0; i < bufferLength; i++) {
                     const barHeight = (dataArray[i] / 255) * height * 0.9;
                     const x = i * barWidth;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                    ctx.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+                    vCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    vCtx.fillRect(x, height - barHeight, barWidth - 1, barHeight);
                 }
             };
             draw();
         }
 
+        // --- Page Interactions ---
         const parallaxContainer = document.getElementById('parallax-container');
         if (window.matchMedia('(pointer: fine)').matches) {
             document.body.addEventListener('mousemove', (e) => {
@@ -697,8 +803,10 @@
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         window.addEventListener('mousemove', e => { cursorDot.style.left = e.clientX + 'px'; cursorDot.style.top = e.clientY + 'px'; cursorOutline.style.left = e.clientX + 'px'; cursorOutline.style.top = e.clientY + 'px'; });
-        const interactiveElements = document.querySelectorAll('.project-card, .social-link, .enter-text, .close-player, .header-title, #audio-control, .track-info, #volume-slider, .skill-chip');
+        const interactiveElements = document.querySelectorAll('.project-card, .social-link, .enter-text, .close-player, .header-title, #audio-control, .track-info, #volume-slider, .skill-chip, .mixer-btn, #close-snake, #snake-restart-btn, .control-btn');
         interactiveElements.forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('link-hover')); el.addEventListener('mouseleave', () => document.body.classList.remove('link-hover')); });
+        
+        // --- Video Player ---
         const videoPlayerModal = document.getElementById('video-player');
         const playerContainer = document.getElementById('player-container');
         const youtubeIframe = document.getElementById('youtube-iframe');
@@ -710,6 +818,11 @@
         const closePlayer = () => { if (!activeCard) return; fadeAudio('in'); const content = activeCard.querySelector('.card-content'); const endRect = content.getBoundingClientRect(); Object.assign(playerContainer.style, { left: `${endRect.left}px`, top: `${endRect.top}px`, width: `${endRect.width}px`, height: `${endRect.height}px`, }); youtubeIframe.src = ''; videoPlayerModal.classList.remove('active'); playerContainer.addEventListener('transitionend', () => { playerContainer.style.opacity = '0'; playerContainer.style.transition = 'none'; if (activeCard) { activeCard.classList.remove('opening'); activeCard = null; } }, { once: true }); parallaxContainer.style.overflowY = 'auto'; };
         closePlayerButton.addEventListener('click', closePlayer);
         videoPlayerModal.addEventListener('click', (e) => { if(e.target === videoPlayerModal) closePlayer(); });
+        
+        // --- Audio Controls & Mixer Listeners ---
+        document.querySelectorAll('.mixer-btn').forEach(btn => btn.addEventListener('click', () => setAudioEffect(btn.dataset.effect)));
+        document.getElementById('next-song').addEventListener('click', playNextSong);
+        document.getElementById('prev-song').addEventListener('click', playPrevSong);
         const audioControl = document.getElementById('audio-control');
         const volumeOnIcon = audioControl.querySelector('.volume-on');
         const volumeOffIcon = audioControl.querySelector('.volume-off');
@@ -718,6 +831,141 @@
         volumeSlider.value = userVolume * 100;
         volumeSlider.addEventListener('input', (e) => { userVolume = e.target.value / 100; bgMusic.volume = userVolume; bgMusic.muted = userVolume === 0; volumeOnIcon.classList.toggle('hidden', userVolume === 0); volumeOffIcon.classList.toggle('hidden', userVolume > 0); });
         audioControl.addEventListener('click', () => { bgMusic.muted = !bgMusic.muted; if (bgMusic.muted) { volumeSlider.value = 0; } else { if(userVolume === 0) userVolume = 0.5; bgMusic.volume = userVolume; volumeSlider.value = userVolume * 100; } volumeOnIcon.classList.toggle('hidden', bgMusic.muted); volumeOffIcon.classList.toggle('hidden', !bgMusic.muted); });
+        
+        // --- Snake Game ---
+        const snakeGame = {
+            modal: document.getElementById('snake-game-modal'),
+            canvas: document.getElementById('snake-canvas'),
+            scoreEl: document.getElementById('snake-score'),
+            gameOverEl: document.getElementById('snake-game-over'),
+            ctx: null,
+            tileSize: 20,
+            tileCount: 20,
+            snake: [],
+            food: {},
+            velocity: { x: 0, y: 0 },
+            score: 0,
+            gameLoopInterval: null,
+            isGameOver: false,
+
+            init() {
+                this.ctx = this.canvas.getContext('2d');
+                this.canvas.width = this.canvas.height = this.tileSize * this.tileCount;
+                document.addEventListener('keydown', this.handleKeydown.bind(this));
+                this.start();
+            },
+
+            start() {
+                this.isGameOver = false;
+                this.snake = [{ x: 10, y: 10 }];
+                this.velocity = { x: 0, y: 0 };
+                this.score = 0;
+                this.updateScore();
+                this.spawnFood();
+                this.gameOverEl.classList.add('hidden');
+                
+                clearInterval(this.gameLoopInterval);
+                this.gameLoopInterval = setInterval(this.gameLoop.bind(this), 100);
+            },
+
+            gameLoop() {
+                if(this.isGameOver) return;
+                this.moveSnake();
+                if(this.checkCollision()) {
+                    this.gameOver();
+                    return;
+                }
+                this.checkFood();
+                this.draw();
+            },
+
+            moveSnake() {
+                const head = { x: this.snake[0].x + this.velocity.x, y: this.snake[0].y + this.velocity.y };
+                this.snake.unshift(head);
+                this.snake.pop();
+            },
+
+            checkCollision() {
+                const head = this.snake[0];
+                if (head.x < 0 || head.x >= this.tileCount || head.y < 0 || head.y >= this.tileCount) {
+                    return true; // Wall collision
+                }
+                for (let i = 1; i < this.snake.length; i++) {
+                    if (head.x === this.snake[i].x && head.y === this.snake[i].y) {
+                        return true; // Self collision
+                    }
+                }
+                return false;
+            },
+
+            checkFood() {
+                if (this.snake[0].x === this.food.x && this.snake[0].y === this.food.y) {
+                    this.score++;
+                    this.updateScore();
+                    this.snake.push({}); // Grow snake (dummy part, will be replaced on next move)
+                    this.spawnFood();
+                }
+            },
+
+            spawnFood() {
+                this.food = {
+                    x: Math.floor(Math.random() * this.tileCount),
+                    y: Math.floor(Math.random() * this.tileCount)
+                };
+                // Ensure food doesn't spawn on the snake
+                for (const part of this.snake) {
+                    if (part.x === this.food.x && part.y === this.food.y) {
+                        this.spawnFood();
+                        break;
+                    }
+                }
+            },
+            
+            draw() {
+                this.ctx.fillStyle = '#0a0a0a';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.ctx.fillStyle = 'lime';
+                this.snake.forEach(part => {
+                    this.ctx.fillRect(part.x * this.tileSize, part.y * this.tileSize, this.tileSize - 2, this.tileSize - 2);
+                });
+
+                this.ctx.fillStyle = 'red';
+                this.ctx.fillRect(this.food.x * this.tileSize, this.food.y * this.tileSize, this.tileSize - 2, this.tileSize - 2);
+            },
+
+            handleKeydown(e) {
+                if (this.isGameOver) return;
+                switch(e.key) {
+                    case 'ArrowUp': if(this.velocity.y === 0) this.velocity = {x: 0, y: -1}; break;
+                    case 'ArrowDown': if(this.velocity.y === 0) this.velocity = {x: 0, y: 1}; break;
+                    case 'ArrowLeft': if(this.velocity.x === 0) this.velocity = {x: -1, y: 0}; break;
+                    case 'ArrowRight': if(this.velocity.x === 0) this.velocity = {x: 1, y: 0}; break;
+                }
+            },
+
+            updateScore() {
+                this.scoreEl.textContent = `Score: ${this.score}`;
+            },
+
+            gameOver() {
+                this.isGameOver = true;
+                clearInterval(this.gameLoopInterval);
+                this.gameOverEl.classList.remove('hidden');
+            }
+        };
+
+        document.getElementById('play-snake-btn').addEventListener('click', () => {
+            snakeGame.modal.classList.remove('hidden');
+            snakeGame.init();
+        });
+        document.getElementById('close-snake').addEventListener('click', () => {
+            snakeGame.modal.classList.add('hidden');
+            clearInterval(snakeGame.gameLoopInterval);
+        });
+        document.getElementById('snake-restart-btn').addEventListener('click', () => {
+            snakeGame.start();
+        });
     </script>
 </body>
 </html>
